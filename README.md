@@ -6,3 +6,6 @@ I am having trouble actually accesing the source code of the project euler site,
 
 ## Update 2
 Python is working much better, using urllib and beatiful soup, got the HTML and it is ealisy parseable
+
+## Update 3
+Starting problem class, might be done with this in a few more days!
