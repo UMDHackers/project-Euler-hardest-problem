@@ -3,6 +3,12 @@ import re
 import urllib2
 from bs4 import BeautifulSoup
 
+class Problem:
+	
+
+#Global
+problem_urls = dict()
+
 def parseNavBar(rawCode):
 	soup = BeautifulSoup(rawCode, 'html.parser')
 	#soup.prettify()
@@ -20,18 +26,20 @@ def pageParser(page):
 	
 def parseProblemLinks(page_link):
 	pageX = urllib2.urlopen('http://projecteuler.net/'+page_link)
-	pageX_html = page_link.read()
+	pageX_html = pageX.read()
 	soup = BeautifulSoup(pageX_html, 'html.parser')
-	problems = []
-	for i in soup.findAll('tr'):
-		if "problem" in i.get("href"):
-			print i
-			problems.append(i)
-	return problems
+	#print soup.prettify()
+	for i in soup.findAll('a'):
+		if "problem=" in i.get("href"):
+			anchor = str(i).split(" ")
+			href = anchor[1]
+			temp = re.search('href="(\S+)"', href)
+			prbl = temp.group(1)
+			#print prbl
+			problem_urls[prbl] = page_link
 	
 	
-	
-	
+#def makeObjofProblem(prbl_link):
 	
 #Get core HTML of the first page
 f= urllib2.urlopen('http://projecteuler.net/archives')
@@ -39,19 +47,21 @@ f= urllib2.urlopen('http://projecteuler.net/archives')
 #Get the navbar
 navbar = parseNavBar(f.read())
 
-#Go through nav-bar and remove duplicates
+#Go through nav-bar 
 page_links = []
 for page in navbar:
-	if page not in page_links:
-		page_link.append(pageParser(page))
-	else: 
-		break
+	page_links.append(pageParser(page))
 
-#page_links = list(set(page_links))
+#remove duplicates
+page_links = list(set(page_links))
 
+#find all problem links
 for link in page_links:
-	print parseProblemLinks(link)
-	
-	
+	parseProblemLinks(link)
+
+#make obj for each problem
+for prb in problem_urls.keys():
+	print prb
+
 	
 
