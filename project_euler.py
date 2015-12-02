@@ -4,11 +4,15 @@ import urllib2
 from bs4 import BeautifulSoup
 
 class Problem:
+	def __init__(self, number, diffculty, page, solved_by):
+		self.number = number
+		self.diffculty = diffculty
+		self.page = page
+		self.solved_by = solved_by
 	
-
 #Global
 problem_urls = dict()
-
+problems_list = list()
 def parseNavBar(rawCode):
 	soup = BeautifulSoup(rawCode, 'html.parser')
 	#soup.prettify()
@@ -38,8 +42,28 @@ def parseProblemLinks(page_link):
 			#print prbl
 			problem_urls[prbl] = page_link
 	
-	
-#def makeObjofProblem(prbl_link):
+def parseProblemPages(link):
+	problem_page = urllib2.urlopen('http://projecteuler.net/'+link)
+	pageX_html = problem_page.read()
+	soup = BeautifulSoup(pageX_html, 'html.parser')
+	link_number = re.search('problem=(\S+)', link)
+	for i in soup.findAll('span'):
+		if "Published" in str(i):
+			string_list = str(i).split(";")
+			print string_list[1]
+			print string_list[2]
+			
+			solved_by = re.search(' Solved by (\S+)', string_list[1]).group(1)
+			diffculty = re.search(' Difficulty rating: (\S+)%</span>', string_list[2])
+			if diffculty == None:
+				diffculty = re.search(' Difficulty rating: (\S+)% (Not yet finalised)</span>', string_list[2]).group(1)
+			else:
+				diffculty = diffculty.group(1)
+			
+			page = problem_urls[link]
+			temp_pro = Problem(link_number, diffculty, page, diffculty)
+			problems_list.append(temp_pro)
+
 	
 #Get core HTML of the first page
 f= urllib2.urlopen('http://projecteuler.net/archives')
@@ -61,7 +85,6 @@ for link in page_links:
 
 #make obj for each problem
 for prb in problem_urls.keys():
-	print prb
+	parseProblemPages(prb)
 
-	
 
