@@ -89,7 +89,9 @@ for link in page_links:
 for prb in problem_urls.keys():
 	parseProblemPages(prb)
 
-problems_list.sort(key=attrgetter('diffculty', 'solved_by'), reverse=True)
+#problems_list.sort(key=attrgetter('diffculty', 'solved_by'), reverse=True)
+problems_list.sort(key=attrgetter('diffculty'), reverse=True)
+
 print "Top 50 hardest problems"
 for i in range(0,50):
 	current = problems_list[i]
