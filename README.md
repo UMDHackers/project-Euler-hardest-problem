@@ -9,3 +9,6 @@ Python is working much better, using urllib and beatiful soup, got the HTML and 
 
 ## Update 3
 Starting problem class, might be done with this in a few more days!
+
+##Update 4
+Ok now I have sorted based on the diffculty but there is a tie! So I am going to add a check to the solved by number to being the tie breaker
