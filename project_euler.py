@@ -4,7 +4,7 @@
 import re
 import urllib2
 from bs4 import BeautifulSoup
-
+from operator import attrgetter
 class Problem:
 	def __init__(self, number, diffculty, page, solved_by):
 		self.number = number
@@ -89,7 +89,7 @@ for link in page_links:
 for prb in problem_urls.keys():
 	parseProblemPages(prb)
 
-problems_list.sort(key=lambda x: x.diffculty, reverse=True)
+problems_list.sort(key=attrgetter('diffculty', 'solved_by'), reverse=True)
 print "Top 50 hardest problems"
 for i in range(0,50):
 	current = problems_list[i]
