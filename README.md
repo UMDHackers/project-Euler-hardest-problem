@@ -1,5 +1,5 @@
 # project-Euler-hardest-problem
-A web-ish crawler to find the hardest problem on project euler
+A web-ish crawler to find the hardest problem on project euler...very slow to run if you have a idea of how to fix this please let me know! Fork and send me a pull!
 
 ##Top 50 Hardest Problem- Notice not perfectly sorted...
 Number 1, Problem Number 494, Page number 10, diffculty 100%, Solved by 93
